@@ -7,10 +7,53 @@
 </head>
 <body>
 <p><a href="javascript:toggle_description()">问题描述:</a></p>
-
+<div id="brinza-task-description">
+<p>You are given N counters, initially set to 0, and you have two possible operations on them:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li><i>increase(X)</i> − counter X is increased by 1,</li>
+<li><i>max counter</i> − all counters are set to the maximum value of any counter.</li>
+</ul>
+</blockquote><p>A non-empty array A of M integers is given. This array represents consecutive operations:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>if A[K] = X, such that 1 ≤ X ≤ N, then operation K is increase(X),</li>
+<li>if A[K] = N + 1 then operation K is max counter.</li>
+</ul>
+</blockquote><p>For example, given integer N = 5 and array A such that:</p>
+<tt style="white-space:pre-wrap">    A[0] = 3
+    A[1] = 4
+    A[2] = 4
+    A[3] = 6
+    A[4] = 1
+    A[5] = 4
+    A[6] = 4</tt>
+<p>the values of the counters after each consecutive operation will be:</p>
+<tt style="white-space:pre-wrap">    (0, 0, 1, 0, 0)
+    (0, 0, 1, 1, 0)
+    (0, 0, 1, 2, 0)
+    (2, 2, 2, 2, 2)
+    (3, 2, 2, 2, 2)
+    (3, 2, 2, 3, 2)
+    (3, 2, 2, 4, 2)</tt>
+<p>The goal is to calculate the value of every counter after all operations.</p>
+<p>Write a function:</p>
+<blockquote><p style="font-family: monospace; font-size: 9pt; display: block; white-space: pre-wrap"><tt>vector&lt;int&gt; solution(int N, vector&lt;int&gt; &amp;A);</tt></p></blockquote>
+<p>that, given an integer N and a non-empty array A consisting of M integers, returns a sequence of integers representing the values of the counters.</p>
+<p>Result array should be returned as a vector of integers.</p>
+<p>For example, given:</p>
+<tt style="white-space:pre-wrap">    A[0] = 3
+    A[1] = 4
+    A[2] = 4
+    A[3] = 6
+    A[4] = 1
+    A[5] = 4
+    A[6] = 4</tt>
+<p>the function should return [3, 2, 2, 4, 2], as explained above.</p>
+<p>Write an <b><b>efficient</b></b> algorithm for the following assumptions:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>N and M are integers within the range [<span class="number">1</span>..<span class="number">100,000</span>];</li>
+<li>each element of array A is an integer within the range [<span class="number">1</span>..<span class="number">N + 1</span>].</li>
+</ul>
+</blockquote></div>
 <div>
 <p>分析：</p>
-
+N个计数器(数组C)，数组A的数字代表一次操作，若A[K]在[1, N] 之间，则C[K]加一，否则C中所有元素都设为当前的C最大值(max counter)。max的操作直接做会导致复杂度变大，实际执行并不需要真正将每个元素设置为最大值，只需要用一个变量保存当前最大值即可。
 </div>
 <pre><span class="comment">//MaxCounters
 </span><span class="comment">// Calculate the values of counters after applying all alternating operations : increase counter by 1; set value of all counters to current maximum.
