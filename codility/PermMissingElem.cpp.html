@@ -1,0 +1,33 @@
+<html>
+<head>
+	<title>PermMissingElem.cpp</title>
+    <meta charset="utf-8">
+    <LINK href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src = '../static/src/cpp.js'></script>
+</head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// PermMissingElem
+</span><span class="comment">// Find the missing element in a given permutation. 
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> PermMissingElem(vector&lt;<span class="keyword">int</span>&gt; &amp;A) 
+{
+    size_t sum = A.size() + <span class="numeric">1</span>;
+    <span class="keyword">for</span> (size_t i = A.size(); i &gt; <span class="numeric">0</span>; --i)
+    {
+        sum -= A[i - <span class="numeric">1</span>];
+        sum += i;
+    }
+    <span class="keyword">return</span> sum;
+}
+
+</pre>
+</body>
+</html>

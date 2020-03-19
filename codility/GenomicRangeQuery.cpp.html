@@ -1,0 +1,84 @@
+<html>
+<head>
+	<title>GenomicRangeQuery.cpp</title>
+    <meta charset="utf-8">
+    <LINK href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src = '../static/src/cpp.js'></script>
+</head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// GenomicRangeQuery
+</span><span class="comment">// Find the minimal nucleotide from a range of sequence DNA.
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+vector&lt;<span class="keyword">int</span>&gt; GenomicRangeQuery(string &amp;S, vector&lt;<span class="keyword">int</span>&gt; &amp;P, vector&lt;<span class="keyword">int</span>&gt; &amp;Q)
+{
+    <span class="keyword">if</span> (P.size() != Q.size() || P.size() &lt; <span class="numeric">1</span>)
+    {
+        <span class="keyword">return</span> vector&lt;<span class="keyword">int</span>&gt;();
+    }
+
+    vector&lt;<span class="keyword">int</span>&gt; As(<span class="numeric">1</span>, <span class="numeric">0</span>), Cs(<span class="numeric">1</span>, <span class="numeric">0</span>), Gs(<span class="numeric">1</span>, <span class="numeric">0</span>), Ts(<span class="numeric">1</span>, <span class="numeric">0</span>);
+    <span class="comment">// save the counts occured before i in S;
+</span>    <span class="keyword">for</span> (size_t i = <span class="numeric">0</span>; i &lt; S.length(); ++i)
+    {
+        As.push_back(As[i]);
+        Cs.push_back(Cs[i]);
+        Gs.push_back(Gs[i]);
+        Ts.push_back(Ts[i]);
+        <span class="keyword">if</span> (S[i] == <span class="literal">'A'</span>)
+        {
+            As[i + <span class="numeric">1</span>] ++;
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span> (S[i] == <span class="literal">'C'</span>)
+        {
+            Cs[i + <span class="numeric">1</span>] ++;
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span> (S[i] == <span class="literal">'G'</span>)
+        {
+            Gs[i + <span class="numeric">1</span>] ++;
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span> (S[i] == <span class="literal">'T'</span>)
+        {
+            Ts[i + <span class="numeric">1</span>] ++;
+        }
+    }
+
+    vector&lt;<span class="keyword">int</span>&gt; res;
+    <span class="keyword">for</span> (size_t i = <span class="numeric">0</span>; i &lt; P.size(); ++i)
+    {
+        <span class="keyword">if</span> (P[i] &gt; Q[i] || P[i] &lt; <span class="numeric">0</span> || Q[i] &lt; <span class="numeric">0</span> || size_t(Q[i]) &gt;= S.length())
+        {
+            <span class="keyword">continue</span>;
+        }
+        <span class="keyword">int</span> p = P[i], q = Q[i] + <span class="numeric">1</span>;
+        <span class="keyword">if</span> (As[q] - As[p] &gt; <span class="numeric">0</span>)
+        {
+            res.push_back(<span class="numeric">1</span>);
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span> (Cs[q] - Cs[p] &gt; <span class="numeric">0</span>)
+        {
+            res.push_back(<span class="numeric">2</span>);
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span> (Gs[q] - Gs[p] &gt; <span class="numeric">0</span>)
+        {
+            res.push_back(<span class="numeric">3</span>);
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span> (Ts[q] - Ts[p] &gt; <span class="numeric">0</span>)
+        {
+            res.push_back(<span class="numeric">4</span>);
+        }
+    }
+
+    <span class="keyword">return</span> res;
+}
+
+</pre>
+</body>
+</html>

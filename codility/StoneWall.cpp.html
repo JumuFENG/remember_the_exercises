@@ -1,0 +1,46 @@
+<html>
+<head>
+	<title>StoneWall.cpp</title>
+    <meta charset="utf-8">
+	<link href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// StoneWall
+</span><span class="comment">// Cover "Manhattan skyline" using the minimum number of rectangles.
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="macro">#include &lt;stack&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> StoneWall(vector&lt;<span class="keyword">int</span>&gt; &amp;H)
+{
+    <span class="keyword">if</span> (H.size() &lt;= <span class="numeric">1</span>)
+    {
+        <span class="keyword">return</span> H.size();
+    }
+
+    stack&lt;<span class="keyword">int</span>&gt; sLst;
+    <span class="keyword">int</span> count = <span class="numeric">0</span>;
+    <span class="keyword">for</span> (size_t i = <span class="numeric">0</span>; i &lt; H.size(); ++i)
+    {
+        <span class="keyword">while</span> (!sLst.empty() &amp;&amp; H[i] &lt; sLst.top())
+        {
+            sLst.pop();
+            count++;
+        }
+        <span class="keyword">if</span> (sLst.empty() || H[i] &gt; sLst.top())
+        {
+            sLst.push(H[i]);
+        }
+    }
+    <span class="keyword">return</span> count + sLst.size();
+}
+
+</pre>
+</body>
+</html>

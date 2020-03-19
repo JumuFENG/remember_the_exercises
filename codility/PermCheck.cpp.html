@@ -1,0 +1,43 @@
+<html>
+<head>
+	<title>PermCheck.cpp</title>
+    <meta charset="utf-8">
+    <LINK href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src = '../static/src/cpp.js'></script>
+</head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// PermCheck
+</span><span class="comment">// Check whether array A is a permutation.
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> PermCheck(vector&lt;<span class="keyword">int</span>&gt; &amp;A)
+{
+    vector&lt;<span class="keyword">int</span>&gt; counts(A.size(), <span class="numeric">0</span>);
+    <span class="keyword">for</span> (<span class="keyword">auto</span> a : A)
+    {
+        <span class="keyword">if</span> (size_t(a - <span class="numeric">1</span>) &gt;= A.size())
+        {
+            <span class="keyword">return</span> <span class="numeric">0</span>;
+        }
+        counts[a - <span class="numeric">1</span>] ++;
+    }
+    <span class="keyword">for</span> (<span class="keyword">auto</span> c : counts)
+    {
+        <span class="keyword">if</span> (c != <span class="numeric">1</span>)
+        {
+            <span class="keyword">return</span> <span class="numeric">0</span>;
+        }
+    }
+    <span class="keyword">return</span> <span class="numeric">1</span>;
+}
+
+</pre>
+</body>
+</html>

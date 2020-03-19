@@ -1,0 +1,53 @@
+<html>
+<head>
+    <title>CyclicRotation.cpp</title>
+    <meta charset="utf-8">
+    <LINK href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src = '../static/src/cpp.js'></script>
+</head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">//CyclicRotation
+</span><span class="comment">//Rotate an array to the right by a given number of steps.
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">void</span> reverse(vector&lt;<span class="keyword">int</span>&gt;::iterator s, vector&lt;<span class="keyword">int</span>&gt;::iterator e)
+{
+    <span class="keyword">auto</span> ss = s;
+    <span class="keyword">auto</span> ee = e - <span class="numeric">1</span>;
+    <span class="keyword">for</span> (; ss &lt; ee; ++ss, --ee)
+    {
+        <span class="keyword">int</span> t = *(ss);
+        *(ss) = *(ee);
+        *(ee) = t;
+    }
+}
+
+vector&lt;<span class="keyword">int</span>&gt; CyclicRotation(vector&lt;<span class="keyword">int</span>&gt; &amp;A, <span class="keyword">int</span> K)
+{
+    <span class="keyword">if</span> (A.size() &lt;= <span class="numeric">1</span>)
+    {
+        <span class="keyword">return</span> A;
+    }
+
+    size_t fK = A.size() &gt; (size_t)K ? K : K % A.size();
+    <span class="keyword">if</span> (fK == <span class="numeric">0</span>)
+    {
+        <span class="keyword">return</span> A;
+    }
+
+    reverse(A.begin(), A.end() - fK);
+    reverse(A.end() - fK, A.end());
+    reverse(A.begin(), A.end());
+    <span class="keyword">return</span> A;
+}
+
+</pre>
+</body>
+</html>

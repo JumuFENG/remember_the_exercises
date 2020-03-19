@@ -1,0 +1,49 @@
+<html>
+<head>
+	<title>TapeEquilibrium.cpp</title>
+    <meta charset="utf-8">
+    <LINK href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src = '../static/src/cpp.js'></script>
+</head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// TapeEquilibrium
+</span><span class="comment">// Minimize the value | (A[0] + ... + A[P - 1]) - (A[P] + ... + A[N - 1]) | .
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> TapeEquilibrium(vector&lt;<span class="keyword">int</span>&gt; &amp;A)
+{
+    <span class="keyword">if</span> (A.size() &lt; <span class="numeric">2</span>)
+    {
+        <span class="keyword">return</span> <span class="numeric">0</span>;
+    }
+
+    <span class="keyword">int</span> sum = <span class="numeric">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">auto</span> a : A)
+    {
+        sum += a;
+    }
+
+    <span class="keyword">int</span> leftSum = A[<span class="numeric">0</span>];
+    <span class="keyword">int</span> mVal = abs(sum - A[<span class="numeric">0</span>] - A[<span class="numeric">0</span>]);
+    <span class="keyword">for</span> (size_t i = <span class="numeric">1</span>; i &lt; A.size() - <span class="numeric">1</span>; ++i)
+    {
+        leftSum += A[i];
+        <span class="keyword">int</span> cur = abs(sum - leftSum - leftSum);
+        <span class="keyword">if</span> (cur &lt; mVal)
+        {
+            mVal = cur;
+        }
+    }
+    <span class="keyword">return</span> mVal;
+}
+
+</pre>
+</body>
+</html>

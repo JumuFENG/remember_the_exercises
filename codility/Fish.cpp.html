@@ -1,0 +1,52 @@
+<html>
+<head>
+	<title>Fish.cpp</title>
+    <meta charset="utf-8">
+	<link href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// Fish
+</span><span class="comment">// N voracious fish are moving along a river.Calculate how many fish are alive.
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="macro">#include &lt;stack&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> Fish(vector&lt;<span class="keyword">int</span>&gt; &amp;A, vector&lt;<span class="keyword">int</span>&gt; &amp;B)
+{
+    <span class="keyword">if</span> (A.size() != B.size())
+    {
+        <span class="keyword">return</span> -<span class="numeric">1</span>;
+    }
+
+    stack&lt;<span class="keyword">int</span>&gt; alived0;
+    stack&lt;<span class="keyword">int</span>&gt; alived1;
+    <span class="keyword">for</span> (size_t i = <span class="numeric">0</span>; i &lt; A.size(); ++i)
+    {
+        <span class="keyword">if</span> (B[i] == <span class="numeric">1</span>)
+        {
+            alived1.push(i);
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span> (B[i] == <span class="numeric">0</span>)
+        {
+            <span class="keyword">while</span> (!alived1.empty() &amp;&amp; A[i] &gt; A[alived1.top()])
+            {
+                alived1.pop();
+            }
+            <span class="keyword">if</span> (alived1.empty())
+            {
+                alived0.push(i);
+            }
+        }
+    }
+    <span class="keyword">return</span> alived0.size() + alived1.size();
+}
+
+</pre>
+</body>
+</html>

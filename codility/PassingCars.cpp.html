@@ -1,0 +1,68 @@
+<html>
+<head>
+	<title>PassingCars.cpp</title>
+    <meta charset="utf-8">
+    <LINK href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src = '../static/src/cpp.js'></script>
+</head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// PassingCars
+</span><span class="comment">// Count the number of passing cars on the road.
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> PassingCars(vector&lt;<span class="keyword">int</span>&gt; &amp;A)
+{
+    <span class="keyword">if</span> (A.size() &lt;= <span class="numeric">1</span>)
+    {
+        <span class="keyword">return</span> <span class="numeric">0</span>;
+    }
+
+    size_t p = <span class="numeric">0</span>;
+    <span class="keyword">for</span> (; p &lt; A.size(); ++p)
+    {<span class="comment">// skip leading 1s
+</span>        <span class="keyword">if</span> (A[p] == <span class="numeric">0</span>)
+        {
+            <span class="keyword">break</span>;
+        }
+    }
+
+    size_t countOne = <span class="numeric">0</span>;
+    <span class="keyword">for</span> (size_t q = p + <span class="numeric">1</span>; q &lt; A.size(); ++q)
+    { <span class="comment">// count 1s
+</span>        <span class="keyword">if</span> (A[q] == <span class="numeric">1</span>)
+        {
+            countOne++;
+        }
+    }
+
+    <span class="keyword">int</span> count = <span class="numeric">0</span>;
+    <span class="keyword">for</span> (; p &lt; A.size(); ++p)
+    {
+        <span class="keyword">if</span> (A[p] == <span class="numeric">0</span>)
+        {
+            count += countOne;
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span> (A[p] == <span class="numeric">1</span>)
+        {
+            countOne--;
+        }
+
+        <span class="keyword">if</span> (count &gt; <span class="numeric">1000000000</span>)
+        {
+            <span class="keyword">return</span> -<span class="numeric">1</span>;
+        }
+    }
+
+    <span class="keyword">return</span> count;
+}
+
+</pre>
+</body>
+</html>

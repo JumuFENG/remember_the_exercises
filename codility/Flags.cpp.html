@@ -1,0 +1,63 @@
+<html>
+<head>
+	<title>Flags.cpp</title>
+    <meta charset="utf-8">
+	<link href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// Flags
+</span><span class="comment">// Find the maximum number of flags that can be set on mountain peaks.
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> Flags(vector&lt;<span class="keyword">int</span>&gt; &amp;A)
+{
+    vector&lt;size_t&gt; fPeaks;
+    <span class="keyword">for</span> (size_t i = <span class="numeric">1</span>; i &lt; A.size() - <span class="numeric">1</span>; ++i)
+    {
+        <span class="keyword">if</span> (A[i] &gt; A[i-<span class="numeric">1</span>] &amp;&amp; A[i] &gt; A[i+<span class="numeric">1</span>])
+        {
+            fPeaks.push_back(i);
+        }
+    }
+
+    <span class="keyword">if</span> (fPeaks.size() &lt;= <span class="numeric">0</span>)
+    {
+        <span class="keyword">return</span> <span class="numeric">0</span>;
+    }
+
+    size_t K = size_t(sqrt(A.size())) + <span class="numeric">1</span>;
+    <span class="keyword">if</span> (K &gt; fPeaks.size())
+    {
+        K = fPeaks.size();
+    }
+
+    <span class="keyword">for</span> (size_t i = K; i &gt; <span class="numeric">0</span>; i--)
+    {
+        size_t fCount = <span class="numeric">1</span>;
+        size_t lastPeak = <span class="numeric">0</span>;
+        <span class="keyword">for</span> (size_t j = <span class="numeric">1</span>; j &lt; fPeaks.size(); ++j)
+        {
+            <span class="keyword">if</span> (fPeaks[j] - fPeaks[lastPeak] &gt;= i)
+            {
+                fCount++;
+                lastPeak = j;
+            }
+        }
+        <span class="keyword">if</span> (fCount &gt;= i)
+        {
+            <span class="keyword">return</span> fCount;
+        }
+    }
+    <span class="keyword">return</span> <span class="numeric">0</span>;
+}
+
+</pre>
+</body>
+</html>

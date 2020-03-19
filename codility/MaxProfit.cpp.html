@@ -1,0 +1,106 @@
+<html>
+<head>
+	<title>MaxProfit.cpp</title>
+    <meta charset="utf-8">
+	<link href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// MaxProfit
+</span><span class="comment">// Given a log of stock prices compute the maximum possible earning.
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> MaxProfit(vector&lt;<span class="keyword">int</span>&gt; &amp;A, size_t s, size_t e)
+{
+    <span class="keyword">if</span> (s &gt;= e)
+    {
+        <span class="keyword">return</span> <span class="numeric">0</span>;
+    }
+
+    <span class="keyword">int</span> minVal = A[s], maxVal = A[s];
+    size_t minIdx = s, maxIdx = s;
+    <span class="keyword">for</span> (size_t i = s + <span class="numeric">1</span>; i &lt;= e; ++ i)
+    {
+        <span class="keyword">if</span> (A[i] &gt; maxVal)
+        {
+            maxVal = A[i];
+            maxIdx = i;
+        }
+        <span class="keyword">if</span> (A[i] &lt; minVal)
+        {
+            minVal = A[i];
+            minIdx = i;
+        }
+    }
+
+    <span class="keyword">if</span> (minIdx &lt;= maxIdx)
+    {
+        <span class="keyword">return</span> maxVal - minVal;
+    }
+    
+    <span class="keyword">int</span> minValPre = A[maxIdx];
+    <span class="keyword">for</span> (size_t i = s; i &lt; maxIdx; ++i)
+    {
+        <span class="keyword">if</span> (A[i] &lt; minValPre)
+        {
+            minValPre = A[i];
+        }
+    }
+    <span class="keyword">int</span> profitPre = A[maxIdx] - minValPre;
+
+    <span class="keyword">int</span> maxValPost = A[minIdx];
+    <span class="keyword">for</span> (size_t i = minIdx; i &lt;= e; ++i)
+    {
+        <span class="keyword">if</span> (A[i] &gt; maxValPost)
+        {
+            maxValPost = A[i];
+        }
+    }
+    <span class="keyword">int</span> profitPost = maxValPost - A[minIdx];
+
+    size_t startIdx = maxIdx;
+    <span class="keyword">for</span> (; startIdx &lt; minIdx - <span class="numeric">1</span>; ++startIdx)
+    {
+        <span class="keyword">if</span> (A[startIdx] &lt; A[startIdx + <span class="numeric">1</span>])
+        {
+            <span class="keyword">break</span>;
+        }
+    }
+
+    <span class="keyword">int</span> profitPrePost = profitPre &gt;= profitPost ? profitPre : profitPost;
+    <span class="keyword">if</span> (startIdx == minIdx)
+    {
+        <span class="keyword">return</span> profitPrePost;
+    }
+
+    size_t endIdx = minIdx;
+    <span class="keyword">for</span> (; endIdx &gt; maxIdx + <span class="numeric">1</span>; --endIdx)
+    {
+        <span class="keyword">if</span> (A[endIdx-<span class="numeric">1</span>] &lt; A[endIdx])
+        {
+            <span class="keyword">break</span>;
+        }
+    }
+    <span class="keyword">if</span> (endIdx == maxIdx)
+    {
+        <span class="keyword">return</span> profitPrePost;
+    }
+
+    <span class="keyword">if</span> (startIdx == s &amp;&amp; endIdx == e)
+    {
+        <span class="keyword">return</span> profitPrePost;
+    }
+
+    <span class="keyword">int</span> profitMiddle = MaxProfit(A, startIdx, endIdx);
+    <span class="keyword">return</span> profitPrePost &gt;= profitMiddle ? profitPrePost : profitMiddle;
+}
+
+</pre>
+</body>
+</html>

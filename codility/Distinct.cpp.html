@@ -1,0 +1,41 @@
+<html>
+<head>
+	<title>Distinct.cpp</title>
+    <meta charset="utf-8">
+	<link href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// Distinct
+</span><span class="comment">// Compute number of distinct values in an array.
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="macro">#include &lt;algorithm&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> Distinct(vector&lt;<span class="keyword">int</span>&gt; &amp;A)
+{
+    <span class="keyword">if</span> (A.size() &lt;= <span class="numeric">1</span>)
+    {
+        <span class="keyword">return</span> A.size();
+    }
+
+    sort(A.begin(), A.end());
+    <span class="keyword">int</span> count = <span class="numeric">1</span>;
+    <span class="keyword">for</span> (size_t i = <span class="numeric">1</span>; i &lt; A.size(); ++i)
+    {
+        <span class="keyword">if</span> (A[i] != A[i-<span class="numeric">1</span>])
+        {
+            count++;
+        }
+    }
+    <span class="keyword">return</span> count;
+}
+
+</pre>
+</body>
+</html>

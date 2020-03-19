@@ -1,0 +1,48 @@
+<html>
+<head>
+	<title>CountDiv.cpp</title>
+    <meta charset="utf-8">
+    <LINK href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src = '../static/src/cpp.js'></script>
+</head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// CountDiv
+</span><span class="comment">// Compute number of integers divisible by k in range[a..b].
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> CountDiv(<span class="keyword">int</span> A, <span class="keyword">int</span> B, <span class="keyword">int</span> K)
+{
+    <span class="keyword">if</span> (A &lt; <span class="numeric">0</span> || B &lt; <span class="numeric">0</span> || A &gt; B || K &lt;= <span class="numeric">0</span>)
+    {
+        <span class="keyword">return</span> <span class="numeric">0</span>;
+    }
+
+    <span class="keyword">int</span> a = (A % K == <span class="numeric">0</span>) ? A : K * (A / K + <span class="numeric">1</span>);
+    <span class="keyword">if</span> (a &gt; B)
+    {
+        <span class="keyword">return</span> <span class="numeric">0</span>;
+    }
+
+    <span class="keyword">int</span> b = (B % K == <span class="numeric">0</span>) ? B : (B / K)*K;
+    <span class="keyword">if</span> (b == a)
+    {
+        <span class="keyword">return</span> <span class="numeric">1</span>;
+    }
+
+    <span class="keyword">if</span> (b &gt; a)
+    {
+        <span class="keyword">return</span> (b - a) / K + <span class="numeric">1</span>;
+    }
+    <span class="keyword">return</span> <span class="numeric">0</span>;
+}
+
+</pre>
+</body>
+</html>

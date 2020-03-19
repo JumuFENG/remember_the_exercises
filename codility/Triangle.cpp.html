@@ -1,0 +1,57 @@
+<html>
+<head>
+	<title>Triangle.cpp</title>
+	<meta charset="utf-8">
+	<link href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// Triangle
+</span><span class="comment">// Determine whether a triangle can be built from a given set of edges.
+</span>
+<span class="comment">// 若存在有序升数组A的三个元素能组成三角形的三边，则一定存在相邻的三个数能组成三角形的三边。
+</span><span class="comment">// 设存在三个数 a + b &gt; c; a = A[i], b=A[k], c = A[j]; i &lt;= k - 1, j &gt;= k+1;
+</span><span class="comment">// 则 a1 = A[k-1] &gt;= A[i] = a; c1 = A[k+1] &lt;= A[j] = c;
+</span><span class="comment">// a1 + b &gt; a + b &gt; c &gt; c1;
+</span><span class="comment">// 所以 一定有  A[k-1] + A[k] &gt; A[k+1]
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="macro">#include &lt;algorithm&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> Triangle(vector&lt;<span class="keyword">int</span>&gt; &amp;A)
+{
+    <span class="keyword">if</span> (A.size() &lt; <span class="numeric">3</span>)
+    {
+        <span class="keyword">return</span> <span class="numeric">0</span>;
+    }
+
+    sort(A.begin(), A.end());
+    <span class="keyword">auto</span> a = A.begin();
+    <span class="keyword">while</span> (*a &lt;= <span class="numeric">0</span> &amp;&amp; a != A.end())
+    {
+        a++;
+    }
+
+    <span class="keyword">if</span> (A.end() - a &lt; <span class="numeric">3</span>)
+    {
+        <span class="keyword">return</span> <span class="numeric">0</span>;
+    }
+
+    <span class="keyword">for</span> (; a != A.end() - <span class="numeric">2</span>; ++a)
+    {
+        <span class="keyword">if</span> (*(a + <span class="numeric">2</span>) - *(a + <span class="numeric">1</span>) &lt; *a)
+        {
+            <span class="keyword">return</span> <span class="numeric">1</span>;
+        }
+    }
+    <span class="keyword">return</span> <span class="numeric">0</span>;
+}
+
+</pre>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<html>
+<head>
+	<title>MaxProductOfThree.cpp</title>
+    <meta charset="utf-8">
+	<link href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// MaxProductOfThree
+</span><span class="comment">// Maximize A[P] * A[Q] * A[R] for any triplet(P, Q, R).
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="macro">#include &lt;algorithm&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> MaxProductOfThree(vector&lt;<span class="keyword">int</span>&gt; &amp;A) 
+{
+    <span class="keyword">if</span> (A.size() &lt; <span class="numeric">3</span>)
+    {
+        <span class="keyword">return</span> -<span class="numeric">1</span>;
+    }
+
+    sort(A.begin(), A.end());
+    size_t idx = A.size() - <span class="numeric">1</span>;
+    <span class="keyword">int</span> r = max(A[<span class="numeric">0</span>] * A[<span class="numeric">1</span>] * A[<span class="numeric">2</span>], A[<span class="numeric">0</span>] * A[<span class="numeric">1</span>] * A[idx]);
+    <span class="keyword">return</span> max(A[idx] * A[idx - <span class="numeric">1</span>] * A[idx - <span class="numeric">2</span>], r);
+}
+
+</pre>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<html>
+<head>
+	<title>Brackets.cpp</title>
+    <meta charset="utf-8">
+	<link href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// Brackets
+</span><span class="comment">// Determine whether a given string of parentheses(multiple types) is properly nested.
+</span><span class="macro">#include &lt;stack&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> Brackets(string &amp;S)
+{
+    stack&lt;<span class="keyword">char</span>&gt; brs;
+    <span class="keyword">for</span> (size_t i = <span class="numeric">0</span>; i &lt; S.size(); ++i)
+    {
+        <span class="keyword">if</span> (S[i] == <span class="literal">'{'</span> || S[i] == <span class="literal">'}'</span> || S[i] == <span class="literal">'['</span> || S[i] == <span class="literal">']'</span> || S[i] == <span class="literal">'('</span> || S[i] == <span class="literal">')'</span>)
+        {
+            <span class="keyword">if</span> (brs.empty())
+            {
+                brs.push(S[i]);
+                <span class="keyword">continue</span>;
+            }
+
+            <span class="keyword">if</span> ((brs.top() == <span class="literal">'{'</span> &amp;&amp; S[i] == <span class="literal">'}'</span>)
+                || (brs.top() == <span class="literal">'['</span> &amp;&amp; S[i] == <span class="literal">']'</span>)
+                || (brs.top() == <span class="literal">'('</span> &amp;&amp; S[i] == <span class="literal">')'</span>))
+            {
+                brs.pop();
+            }
+            <span class="keyword">else</span>
+            {
+                brs.push(S[i]);
+            }
+        }
+    }
+    <span class="keyword">return</span> brs.size() == <span class="numeric">0</span> ? <span class="numeric">1</span> : <span class="numeric">0</span>;
+}
+
+</pre>
+</body>
+</html>

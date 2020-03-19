@@ -1,0 +1,47 @@
+<html>
+<head>
+	<title>FrogRiverOne.cpp</title>
+    <meta charset="utf-8">
+    <LINK href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src = '../static/src/cpp.js'></script>
+</head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// FrogRiverOne
+</span><span class="comment">// Find the earliest time when a frog can jump to the other side of a river.
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> FrogRiverOne(<span class="keyword">int</span> X, vector&lt;<span class="keyword">int</span>&gt; &amp;A)
+{
+    <span class="keyword">if</span> (size_t(X) &gt; A.size())
+    {
+        <span class="keyword">return</span> -<span class="numeric">1</span>;
+    }
+
+    vector&lt;<span class="keyword">bool</span>&gt; riverPtCovered(X, <span class="keyword">false</span>);
+    <span class="keyword">int</span> CoveredCount = <span class="numeric">0</span>;
+    <span class="keyword">for</span> (size_t i = <span class="numeric">0</span>; i &lt; A.size(); ++i)
+    {
+        <span class="keyword">if</span> (A[i] - <span class="numeric">1</span> &lt; X &amp;&amp; A[i] &gt;= <span class="numeric">1</span> &amp;&amp; !riverPtCovered[A[i] - <span class="numeric">1</span>])
+        {
+            riverPtCovered[A[i] - <span class="numeric">1</span>] = <span class="keyword">true</span>;
+            CoveredCount++;
+            <span class="keyword">if</span> (CoveredCount == X)
+            {
+                <span class="keyword">return</span> i;
+            }
+        }
+    }
+
+    <span class="keyword">return</span> -<span class="numeric">1</span>;
+}
+
+</pre>
+</body>
+</html>

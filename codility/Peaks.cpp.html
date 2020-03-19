@@ -1,0 +1,71 @@
+<html>
+<head>
+	<title>Peaks.cpp</title>
+    <meta charset="utf-8">
+	<link href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// Peaks
+</span><span class="comment">// Divide an array into the maximum number of same - sized blocks, each of which should contain an index P such that A[P - 1] &lt; A[P] &gt; A[P + 1].
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> Peaks(vector&lt;<span class="keyword">int</span>&gt; A)
+{
+    <span class="keyword">if</span> (A.size() &lt;= <span class="numeric">2</span>)
+    {
+        <span class="keyword">return</span> <span class="numeric">0</span>;
+    }
+
+    vector&lt;<span class="keyword">bool</span>&gt; peaks(A.size(), <span class="keyword">false</span>);
+    <span class="keyword">int</span> cnt = <span class="numeric">0</span>;
+    <span class="keyword">for</span> (size_t i = <span class="numeric">1</span>; i &lt; A.size() - <span class="numeric">1</span>; ++i)
+    {
+        <span class="keyword">if</span> (A[i-<span class="numeric">1</span>] &lt; A[i] &amp;&amp; A[i] &gt; A[i+<span class="numeric">1</span>])
+        {
+            cnt++;
+            peaks[i] = <span class="keyword">true</span>;
+        }
+    }
+
+    <span class="keyword">for</span> (size_t i = cnt; i &gt; <span class="numeric">0</span>; --i)
+    {
+        <span class="keyword">if</span> (A.size() % i != <span class="numeric">0</span>)
+        {
+            <span class="keyword">continue</span>;
+        }
+        <span class="keyword">bool</span> hasPeak = <span class="keyword">true</span>;
+        <span class="keyword">for</span> (size_t j = <span class="numeric">0</span>; j &lt; i; ++j)
+        {
+            <span class="keyword">bool</span> kHasPeak = <span class="keyword">false</span>;
+            <span class="keyword">for</span> (size_t k = <span class="numeric">0</span>; k &lt; A.size() / i; k++)
+            {
+                <span class="keyword">if</span> (peaks[j * (A.size() / i) + k])
+                {
+                    kHasPeak = <span class="keyword">true</span>;
+                    <span class="keyword">break</span>;
+                }
+            }
+            hasPeak = kHasPeak;
+            <span class="keyword">if</span> (!hasPeak)
+            {
+                <span class="keyword">break</span>;
+            }
+        }
+        <span class="keyword">if</span> (hasPeak)
+        {
+            <span class="keyword">return</span> i;
+        }
+    }
+    <span class="keyword">return</span> <span class="numeric">0</span>;
+}
+
+</pre>
+</body>
+</html>

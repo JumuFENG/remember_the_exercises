@@ -1,0 +1,69 @@
+<html>
+<head>
+	<title>NumberOfDiscIntersections.cpp</title>
+    <meta charset="utf-8">
+	<link href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// NumberOfDiscIntersections
+</span><span class="comment">// Compute the number of intersections in a sequence of discs.
+</span>
+<span class="comment">//  i + A[i] &gt;= j - A[j] &lt;=&gt;  -(i+A[i]) &lt;= A[j] - j  &lt;=&gt; A[j] - j &gt;= - (i+A[i]) 
+</span><span class="comment">// &lt;=&gt; A[i] &gt;= j - A[j] - i;
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="macro">#include &lt;algorithm&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> countOfInesect(vector&lt;<span class="keyword">int</span>&gt;&amp; Aj, <span class="keyword">int</span> ai, <span class="keyword">int</span> i)
+{
+    <span class="keyword">int</span> ct = <span class="numeric">0</span>;
+    <span class="keyword">if</span> (ai &lt; INT_MAX - i)
+    {
+        ct = upper_bound(Aj.begin(), Aj.end(), ai + i) - Aj.begin() - i - <span class="numeric">1</span>;
+    }
+    <span class="keyword">else</span>
+    {
+        vector&lt;<span class="keyword">int</span>&gt; Ajs;
+        <span class="keyword">for</span> (<span class="keyword">auto</span> a : Aj)
+        {
+            Ajs.push_back(a - i);
+        }
+        ct = upper_bound(Ajs.begin(), Ajs.end(), ai) - Ajs.begin() - i - <span class="numeric">1</span>;
+    }
+    <span class="keyword">return</span> ct &gt; <span class="numeric">0</span> ? ct : <span class="numeric">0</span>;
+}
+
+<span class="keyword">int</span> NumberOfDiscIntersections(vector&lt;<span class="keyword">int</span>&gt; &amp;A)
+{
+    <span class="keyword">if</span> (A.size() &lt; <span class="numeric">2</span>)
+    {
+        <span class="keyword">return</span> <span class="numeric">0</span>;
+    }
+
+    vector&lt;<span class="keyword">int</span>&gt; Aj;
+    <span class="keyword">for</span> (size_t j = <span class="numeric">0</span>; j &lt; A.size(); ++j)
+    {
+        Aj.push_back(j - A[j]);
+    }
+    sort(Aj.begin(), Aj.end());
+    <span class="keyword">int</span> count = <span class="numeric">0</span>;
+    <span class="keyword">for</span> (size_t i = <span class="numeric">0</span>; i &lt; A.size(); ++i)
+    {
+        count += countOfInesect(Aj, A[i], i);
+        <span class="keyword">if</span> (count &gt; <span class="numeric">10000000</span>)
+        {
+            <span class="keyword">return</span> -<span class="numeric">1</span>;
+        }
+    }
+    <span class="keyword">return</span> count;
+}
+
+</pre>
+</body>
+</html>

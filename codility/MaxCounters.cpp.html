@@ -1,0 +1,66 @@
+<html>
+<head>
+	<title>MaxCounters.cpp</title>
+    <meta charset="utf-8">
+    <LINK href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src = '../static/src/cpp.js'></script>
+</head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">//MaxCounters
+</span><span class="comment">// Calculate the values of counters after applying all alternating operations : increase counter by 1; set value of all counters to current maximum.
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+vector&lt;<span class="keyword">int</span>&gt; MaxCounters(<span class="keyword">int</span> N, vector&lt;<span class="keyword">int</span>&gt; &amp;A)
+{
+    vector&lt;<span class="keyword">int</span>&gt; counter(N, <span class="numeric">0</span>);
+    <span class="keyword">int</span> maxCount = <span class="numeric">0</span>;
+    <span class="keyword">int</span> allShouldBe = <span class="numeric">0</span>;
+    <span class="keyword">for</span> (size_t i = <span class="numeric">0</span>; i &lt; A.size(); i++)
+    {
+        <span class="keyword">if</span> (A[i] &lt; <span class="numeric">1</span> || A[i] &gt; N + <span class="numeric">1</span>)
+        {
+            <span class="keyword">continue</span>;
+        }
+        <span class="keyword">if</span> (A[i] == N + <span class="numeric">1</span>)
+        {
+            allShouldBe = maxCount;
+        }
+        <span class="keyword">else</span>
+        {
+            <span class="keyword">if</span> (counter[A[i] - <span class="numeric">1</span>] &lt; allShouldBe)
+            {
+                counter[A[i] - <span class="numeric">1</span>] = allShouldBe + <span class="numeric">1</span>;
+            }
+            <span class="keyword">else</span>
+            {
+                counter[A[i] - <span class="numeric">1</span>] ++;
+            }
+
+            <span class="keyword">if</span> (maxCount &lt; counter[A[i] - <span class="numeric">1</span>])
+            {
+                maxCount = counter[A[i] - <span class="numeric">1</span>];
+            }
+        }
+    }
+
+    <span class="keyword">for</span> (size_t i = <span class="numeric">0</span>; i &lt; counter.size(); i++)
+    {
+        <span class="keyword">if</span> (counter[i] &lt; allShouldBe)
+        {
+            counter[i] = allShouldBe;
+        }
+    }
+
+    <span class="keyword">return</span> counter;
+}
+
+</pre>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<html>
+<head>
+	<title>MinAvgTwoSlice.cpp</title>
+    <meta charset="utf-8">
+    <LINK href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src = '../static/src/cpp.js'></script>
+</head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// MinAvgTwoSlice
+</span><span class="comment">// Find the minimal average of any slice containing at least two elements.
+</span><span class="comment">// 关窍在于这个slice要么是2个元素组成，要么是3个元素组成。因为如果是规模&gt;3的slice，
+</span><span class="comment">// 那么整体的avg必然不可能小于这个slice分割成的子slice（规模为2或3）的avg，
+</span><span class="comment">// 所以在只考虑slice的规模为2和3的情况下，线性复杂度就很好实现了。
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> MinAvgTwoSlice(vector&lt;<span class="keyword">int</span>&gt; &amp;A)
+{
+    <span class="keyword">double</span> aver = A[<span class="numeric">0</span>] + A[<span class="numeric">1</span>] / <span class="numeric">2</span>.<span class="numeric">0</span>;
+    <span class="keyword">int</span> r = <span class="numeric">0</span>;
+    <span class="keyword">int</span> lIdx = <span class="keyword">int</span>(A.size()) - <span class="numeric">1</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="numeric">0</span>; i &lt; lIdx; ++i)
+    {
+        <span class="keyword">double</span> tmpAvg = (A[i] + A[i + <span class="numeric">1</span>]) / <span class="numeric">2</span>.<span class="numeric">0</span>;
+        <span class="keyword">if</span> (i &lt;  <span class="keyword">int</span>(A.size()) - <span class="numeric">2</span> &amp;&amp; (A[i] + A[i + <span class="numeric">1</span>] + A[i + <span class="numeric">2</span>]) / <span class="numeric">3</span>.<span class="numeric">0</span> &lt; tmpAvg)
+        {
+            tmpAvg = (A[i] + A[i + <span class="numeric">1</span>] + A[i + <span class="numeric">2</span>]) / <span class="numeric">3</span>.<span class="numeric">0</span>;
+        }
+        <span class="keyword">if</span> (tmpAvg &lt; aver)
+        {
+            aver = tmpAvg;
+            r = i;
+        }
+    }
+
+    <span class="keyword">return</span> r;
+}
+
+</pre>
+</body>
+</html>

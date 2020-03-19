@@ -1,0 +1,51 @@
+<html>
+<head>
+	<title>MaxSliceSum.cpp</title>
+    <meta charset="utf-8">
+	<link href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// MaxSliceSum
+</span><span class="comment">// Find a maximum sum of a compact subsequence of array elements.
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> MaxSliceSum(vector&lt;<span class="keyword">int</span>&gt; &amp;A)
+{
+    <span class="keyword">if</span> (A.size() &lt; <span class="numeric">1</span>)
+    {
+        <span class="keyword">return</span> <span class="numeric">0</span>;
+    }
+
+    <span class="keyword">int</span> maxEle = A[<span class="numeric">0</span>];
+    <span class="keyword">for</span> (size_t i = <span class="numeric">1</span>; i &lt; A.size(); ++i)
+    {
+        <span class="keyword">if</span> (A[i] &gt; maxEle)
+        {
+            maxEle = A[i];
+        }
+    }
+    <span class="keyword">if</span> (maxEle &lt; <span class="numeric">0</span>)
+    {
+        <span class="keyword">return</span> maxEle;
+    }
+
+    <span class="keyword">int</span> maxSlice = A[<span class="numeric">0</span>];
+    <span class="keyword">int</span> maxEnding = A[<span class="numeric">0</span>];
+    <span class="keyword">for</span> (size_t i = <span class="numeric">1</span>; i &lt; A.size(); ++i)
+    {
+        maxEnding = maxEnding + A[i] &gt; <span class="numeric">0</span> ? maxEnding + A[i] : <span class="numeric">0</span>;
+        maxSlice = maxEnding &gt; maxSlice ? maxEnding : maxSlice;
+    }
+    <span class="keyword">return</span> maxSlice;
+}
+
+</pre>
+</body>
+</html>

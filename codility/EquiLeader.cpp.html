@@ -1,0 +1,77 @@
+<html>
+<head>
+	<title>EquiLeader.cpp</title>
+    <meta charset="utf-8">
+	<link href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">// EquiLeader
+</span><span class="comment">// Find the index S such that the leaders of the sequences A[0], A[1], ..., A[S] and A[S + 1], A[S + 2], ..., A[N - 1] are the same.
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> EquiLeader(vector&lt;<span class="keyword">int</span>&gt;&amp; A)
+{
+    size_t count = <span class="numeric">1</span>;
+    <span class="keyword">int</span> lead = A[<span class="numeric">0</span>];
+    <span class="keyword">for</span> (size_t i = <span class="numeric">1</span>; i &lt; A.size(); ++i)
+    {
+        <span class="keyword">if</span> (count == <span class="numeric">0</span>)
+        {
+            lead = A[i];
+        }
+
+        <span class="keyword">if</span> (lead == A[i])
+        {
+            count++;
+        }
+        <span class="keyword">else</span>
+        {
+            count--;
+        }
+    }
+
+    <span class="keyword">if</span> (count &lt;= <span class="numeric">0</span>)
+    {
+        <span class="keyword">return</span> <span class="numeric">0</span>;
+    }
+
+    count = <span class="numeric">0</span>;
+    <span class="keyword">for</span> (size_t i = <span class="numeric">0</span>; i &lt; A.size(); ++i)
+    {
+        <span class="keyword">if</span> (A[i] == lead)
+        {
+            count++;
+        }
+    }
+
+    <span class="keyword">if</span> (count + count &lt;= A.size())
+    {
+        <span class="keyword">return</span> <span class="numeric">0</span>;
+    }
+
+    size_t fcount = <span class="numeric">0</span>;
+    <span class="keyword">int</span> res = <span class="numeric">0</span>;
+    <span class="keyword">for</span> (size_t i = <span class="numeric">0</span>; i &lt; A.size(); ++i)
+    {
+        <span class="keyword">if</span> (lead == A[i])
+        {
+            fcount++;
+        }
+        <span class="keyword">if</span> (<span class="numeric">2</span> * fcount &gt; i + <span class="numeric">1</span> &amp;&amp; <span class="numeric">2</span> * (count - fcount) &gt; A.size() - i - <span class="numeric">1</span>)
+        {
+            res++;
+        }
+    }
+    <span class="keyword">return</span> res;
+}
+
+</pre>
+</body>
+</html>

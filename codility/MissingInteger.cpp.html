@@ -1,0 +1,59 @@
+<html>
+<head>
+	<title>MissingInteger.cpp</title>
+    <meta charset="utf-8">
+    <LINK href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src = '../static/src/cpp.js'></script>
+</head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+
+<div>
+<p>分析：</p>
+
+</div>
+<pre><span class="comment">//MissingInteger
+</span><span class="comment">//Find the smallest positive integer that does not occur in a given sequence.
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> MissingInteger(vector&lt;<span class="keyword">int</span>&gt; &amp;A)
+{
+    vector&lt;<span class="keyword">bool</span>&gt; occured;
+    occured.push_back(<span class="keyword">true</span>);
+    <span class="keyword">for</span> (<span class="keyword">auto</span> a : A)
+    {
+        <span class="keyword">if</span> (a &lt;= <span class="numeric">0</span>)
+        {
+            <span class="keyword">continue</span>;
+        }
+
+        <span class="keyword">if</span> (size_t(a) &lt; occured.size())
+        {
+            occured[a] = <span class="keyword">true</span>;
+        }
+        <span class="keyword">else</span>
+        {
+            <span class="keyword">for</span> (<span class="keyword">int</span> i = occured.size(); i &lt; a; ++i)
+            {
+                occured.push_back(<span class="keyword">false</span>);
+            }
+            occured.push_back(<span class="keyword">true</span>);
+        }
+    }
+
+    size_t i = <span class="numeric">0</span>; 
+    <span class="keyword">for</span> (; i &lt; occured.size(); ++i)
+    {
+        <span class="keyword">if</span> (!occured[i])
+        {
+            <span class="keyword">return</span> i;
+        }
+    }
+
+    <span class="keyword">return</span> i;
+}
+
+</pre>
+</body>
+</html>

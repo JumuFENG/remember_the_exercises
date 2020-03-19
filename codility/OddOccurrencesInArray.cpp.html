@@ -1,0 +1,62 @@
+<html>
+<head>
+	<title>OddOccurrencesInArray.cpp</title>
+  <meta charset="utf-8">
+	<LINK href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src = '../static/src/cpp.js'></script>
+</head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+<div id="brinza-task-description">
+<p>A non-empty array A consisting of N integers is given. The array contains an odd number of elements, and each element of the array can be paired with another element that has the same value, except for one element that is left unpaired.</p>
+<p>For example, in array A such that:</p>
+<tt style="white-space:pre-wrap">  A[0] = 9  A[1] = 3  A[2] = 9
+  A[3] = 3  A[4] = 9  A[5] = 7
+  A[6] = 9</tt>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>the elements at indexes 0 and 2 have value 9,</li>
+<li>the elements at indexes 1 and 3 have value 3,</li>
+<li>the elements at indexes 4 and 6 have value 9,</li>
+<li>the element at index 5 has value 7 and is unpaired.</li>
+</ul>
+</blockquote><p>Write a function:</p>
+<blockquote><p style="font-family: monospace; font-size: 9pt; display: block; white-space: pre-wrap"><tt>int solution(vector&lt;int&gt; &amp;A);</tt></p></blockquote>
+<p>that, given an array A consisting of N integers fulfilling the above conditions, returns the value of the unpaired element.</p>
+<p>For example, given array A such that:</p>
+<tt style="white-space:pre-wrap">  A[0] = 9  A[1] = 3  A[2] = 9
+  A[3] = 3  A[4] = 9  A[5] = 7
+  A[6] = 9</tt>
+<p>the function should return 7, as explained in the example above.</p>
+<p>Write an <b><b>efficient</b></b> algorithm for the following assumptions:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>N is an odd integer within the range [1..1,000,000];</li>
+<li>each element of array A is an integer within the range [<span class="number">1</span>..<span class="number">1,000,000,000</span>];</li>
+<li>all but one of the values in A occur an even number of times.</li>
+</ul>
+</blockquote></div>
+<div>
+<p>分析：</p>
+<p> <li>a ^ a = 0;
+<li>0 ^ a = a;
+<li>a ^ b = b ^ a;</li>
+数组中只有一个数字出现了奇数次，那么将所有数字异或最后结果就是出现奇数次的数字。
+</p>
+</div>
+<pre><span class="comment">// OddOccurrencesInArray
+</span><span class="comment">//Find value that occurs in odd number of elements.
+</span>
+<span class="macro">#include &lt;vector&gt;
+</span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">int</span> OddOccurrencesInArray(vector&lt;<span class="keyword">int</span>&gt; &amp;A)
+{
+    <span class="keyword">int</span> r = <span class="numeric">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">auto</span> i : A)
+    {
+        r ^= i;
+    }
+
+    <span class="keyword">return</span> r;
+}
+
+</pre>
+</body>
+</html>

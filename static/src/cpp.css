@@ -1,0 +1,22 @@
+pre {
+    background-color: rgb(39, 40, 34);
+    color: rgb(248, 248, 242);
+    white-space:pre-wrap;
+}
+.comment {
+	color:DarkGray;
+	font-style:italic;
+}
+.macro {
+	color:#AE81FF;
+}
+.literal {
+	color:#E6DB74;
+}
+.keyword {
+	color:rgb(249, 38, 114);
+	font-weight:bold;
+}
+.numeric {
+	color:#AE81FF;
+}
