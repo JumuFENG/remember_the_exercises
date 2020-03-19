@@ -7,10 +7,41 @@
 </head>
 <body>
 <p><a href="javascript:toggle_description()">问题描述:</a></p>
-
+<div id="brinza-task-description">
+<p>A non-empty array A consisting of N integers is given. The consecutive elements of array A represent consecutive cars on a road.</p>
+<p>Array A contains only 0s and/or 1s:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>0 represents a car traveling east,</li>
+<li>1 represents a car traveling west.</li>
+</ul>
+</blockquote><p>The goal is to count passing cars. We say that a pair of cars (P, Q), where 0 ≤ P &lt; Q &lt; N, is passing when P is traveling to the east and Q is traveling to the west.</p>
+<p>For example, consider array A such that:</p>
+<tt style="white-space:pre-wrap">  A[0] = 0
+  A[1] = 1
+  A[2] = 0
+  A[3] = 1
+  A[4] = 1</tt>
+<p>We have five pairs of passing cars: (0, 1), (0, 3), (0, 4), (2, 3), (2, 4).</p>
+<p>Write a function:</p>
+<blockquote><p style="font-family: monospace; font-size: 9pt; display: block; white-space: pre-wrap"><tt>int solution(vector&lt;int&gt; &amp;A);</tt></p></blockquote>
+<p>that, given a non-empty array A of N integers, returns the number of pairs of passing cars.</p>
+<p>The function should return −1 if the number of pairs of passing cars exceeds 1,000,000,000.</p>
+<p>For example, given:</p>
+<tt style="white-space:pre-wrap">  A[0] = 0
+  A[1] = 1
+  A[2] = 0
+  A[3] = 1
+  A[4] = 1</tt>
+<p>the function should return 5, as explained above.</p>
+<p>Write an <b><b>efficient</b></b> algorithm for the following assumptions:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>N is an integer within the range [<span class="number">1</span>..<span class="number">100,000</span>];</li>
+<li>each element of array A is an integer that can have one of the following values: 0, 1.</li>
+</ul>
+</blockquote></div>
 <div>
 <p>分析：</p>
-
+找配对，A[i] = 0，A[j] = 1 且 i &lt; j，则配对成功，一个0可以与多个位置的1配对。<br \>
+第一步 找出第一个0后面所有1的个数countOne。<br \>
+第二步 从第一个0开始遍历，后面的每遇到1个0 则配对数 + countOne 遇到一个1 则countOne 减1. countOne = 0 时结束。
 </div>
 <pre><span class="comment">// PassingCars
 </span><span class="comment">// Count the number of passing cars on the road.
@@ -52,6 +83,11 @@
         <span class="keyword">else</span> <span class="keyword">if</span> (A[p] == <span class="numeric">1</span>)
         {
             countOne--;
+        }
+
+        <span class="keyword">if</span> (countOne == <span class="numeric">0</span>)
+        {
+            <span class="keyword">break</span>;
         }
 
         <span class="keyword">if</span> (count &gt; <span class="numeric">1000000000</span>)

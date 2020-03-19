@@ -7,10 +7,21 @@
 </head>
 <body>
 <p><a href="javascript:toggle_description()">问题描述:</a></p>
-
+<div id="brinza-task-description">
+<p>Write a function:</p>
+<blockquote><p style="font-family: monospace; font-size: 9pt; display: block; white-space: pre-wrap"><tt>int solution(int A, int B, int K);</tt></p></blockquote>
+<p>that, given three integers A, B and K, returns the number of integers within the range [A..B] that are divisible by K, i.e.:</p>
+<blockquote><p>{ i : A ≤ i ≤ B, i&nbsp;<b>mod</b>&nbsp;K = 0 }</p></blockquote>
+<p>For example, for A = 6, B = 11 and K = 2, your function should return 3, because there are three numbers divisible by 2 within the range [6..11], namely 6, 8 and 10.</p>
+<p>Write an <b><b>efficient</b></b> algorithm for the following assumptions:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>A and B are integers within the range [<span class="number">0</span>..<span class="number">2,000,000,000</span>];</li>
+<li>K is an integer within the range [<span class="number">1</span>..<span class="number">2,000,000,000</span>];</li>
+<li>A ≤ B.</li>
+</ul>
+</blockquote></div>
 <div>
 <p>分析：</p>
-
+计算[A,B]之间能被K整除的数的个数。不能用循环遍历的方式，复杂度太大。若a, b都能被K整除，那么[a,b]之间有(b - a) / K + 1个，所以需要找到最小的a(a &gt;= A 且 a mod K = 0)， 找到最大的b (b &lt;= B 且 b mod K = 0)。
 </div>
 <pre><span class="comment">// CountDiv
 </span><span class="comment">// Compute number of integers divisible by k in range[a..b].
