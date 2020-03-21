@@ -6,10 +6,31 @@
 	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
 <body>
 <p><a href="javascript:toggle_description()">问题描述:</a></p>
-
+<div id="brinza-task-description">
+<p>An array A consisting of N integers is given. The <i>dominator</i> of array A is the value that occurs in more than half of the elements of A.</p>
+<p>For example, consider array A such that</p>
+<tt style="white-space:pre-wrap"> A[0] = 3    A[1] = 4    A[2] =  3
+ A[3] = 2    A[4] = 3    A[5] = -1
+ A[6] = 3    A[7] = 3</tt>
+<p>The dominator of A is 3 because it occurs in 5 out of 8 elements of A (namely in those with indices 0, 2, 4, 6 and 7) and 5 is more than a half of 8.</p>
+<p>Write a function</p>
+<blockquote><p style="font-family: monospace; font-size: 9pt; display: block; white-space: pre-wrap"><tt>int solution(vector&lt;int&gt; &amp;A);</tt></p></blockquote>
+<p>that, given an array A consisting of N integers, returns index of any element of array A in which the dominator of A occurs. The function should return −1 if array A does not have a dominator.</p>
+<p>For example, given array A such that</p>
+<tt style="white-space:pre-wrap"> A[0] = 3    A[1] = 4    A[2] =  3
+ A[3] = 2    A[4] = 3    A[5] = -1
+ A[6] = 3    A[7] = 3</tt>
+<p>the function may return 0, 2, 4, 6 or 7, as explained above.</p>
+<p>Write an <b><b>efficient</b></b> algorithm for the following assumptions:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>N is an integer within the range [<span class="number">0</span>..<span class="number">100,000</span>];</li>
+<li>each element of array A is an integer within the range [<span class="number">−2,147,483,648</span>..<span class="number">2,147,483,647</span>].</li>
+</ul>
+</blockquote></div>
 <div>
 <p>分析：</p>
-
+找出出现次数大于数组长度一半的数的任意一个索引值。<br />
+关键是先找出出现次数最多的数，后面需要判断这个数是不是出现次数大于一半，最后返回任意一个索引。<br />
+如果一个数与当前出现次数最多的数lead相等则计数+1否则-1，计数为0从新选择lead。
 </div>
 <pre><span class="comment">// Dominator
 </span><span class="comment">// Find an index of an array such that its value occurs at more than half of indices in the array.
@@ -23,22 +44,27 @@
         <span class="keyword">return</span> -<span class="numeric">1</span>;
     }
 
-    size_t count = <span class="numeric">1</span>;
-    <span class="keyword">int</span> lead = A[<span class="numeric">0</span>];
-    <span class="keyword">for</span> (size_t i = <span class="numeric">1</span>; i &lt; A.size(); ++i)
+    size_t count = <span class="numeric">0</span>;
+    <span class="keyword">int</span> lead = <span class="numeric">0</span>;
+    <span class="keyword">for</span> (size_t i = <span class="numeric">0</span>; i &lt; A.size(); ++i)
     {
+        <span class="keyword">if</span> (count > 0)
+        {
+            <span class="keyword">if</span> (lead == A[i])
+            {
+                count++;
+            }
+            <span class="keyword">else</span>
+            {
+                count--;
+            }
+        }
+
         <span class="keyword">if</span> (count == <span class="numeric">0</span>)
         {
             lead = A[i];
-        }
-
-        <span class="keyword">if</span> (lead == A[i])
-        {
-            count++;
-        }
-        <span class="keyword">else</span>
-        {
-            count--;
+            count = <span class="numeric">1</span>;
+            <span class="keyword">continue</span>;
         }
     }
     
