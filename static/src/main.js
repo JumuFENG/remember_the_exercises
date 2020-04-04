@@ -63,6 +63,7 @@ var caseNames = [
     'EquiLeader',
     'MaxProfit',
     'MaxSliceSum',
+    'MaxDoubleSliceSum',
     'CountFactors',
     'MinPerimeterRectangle',
     'Peaks',

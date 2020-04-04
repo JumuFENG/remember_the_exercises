@@ -6,10 +6,64 @@
 	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
 <body>
 <p><a href="javascript:toggle_description()">问题描述:</a></p>
-
+<div id="brinza-task-description">
+<p>A non-empty array A consisting of N integers is given.</p>
+<p>A <i>peak</i> is an array element which is larger than its neighbors. More precisely, it is an index P such that 0 &lt; P &lt; N − 1,&nbsp; A[P − 1] &lt; A[P] and A[P] &gt; A[P + 1].</p>
+<p>For example, the following array A:</p>
+<tt style="white-space:pre-wrap">    A[0] = 1
+    A[1] = 2
+    A[2] = 3
+    A[3] = 4
+    A[4] = 3
+    A[5] = 4
+    A[6] = 1
+    A[7] = 2
+    A[8] = 3
+    A[9] = 4
+    A[10] = 6
+    A[11] = 2</tt>
+<p>has exactly three peaks: 3, 5, 10.</p>
+<p>We want to divide this array into blocks containing the same number of elements. More precisely, we want to choose a number K that will yield the following blocks:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>A[0], A[1], ..., A[K − 1],</li>
+<li>A[K], A[K + 1], ..., A[2K − 1],<br>
+ ...</li>
+<li>A[N − K], A[N − K + 1], ..., A[N − 1].</li>
+</ul>
+</blockquote><p>What's more, every block should contain at least one peak. Notice that extreme elements of the blocks (for example A[K − 1] or A[K]) can also be peaks, but only if they have both neighbors (including one in an adjacent blocks).</p>
+<p>The goal is to find the maximum number of blocks into which the array A can be divided.</p>
+<p>Array A can be divided into blocks as follows:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>one block (1, 2, 3, 4, 3, 4, 1, 2, 3, 4, 6, 2). This block contains three peaks.</li>
+<li>two blocks (1, 2, 3, 4, 3, 4) and (1, 2, 3, 4, 6, 2). Every block has a peak.</li>
+<li>three blocks (1, 2, 3, 4), (3, 4, 1, 2), (3, 4, 6, 2). Every block has a peak. Notice in particular that the first block (1, 2, 3, 4) has a peak at A[3], because A[2] &lt; A[3] &gt; A[4], even though A[4] is in the adjacent block.</li>
+</ul>
+</blockquote><p>However, array A cannot be divided into four blocks, (1, 2, 3), (4, 3, 4), (1, 2, 3) and (4, 6, 2), because the (1, 2, 3) blocks do not contain a peak. Notice in particular that the (4, 3, 4) block contains two peaks: A[3] and A[5].</p>
+<p>The maximum number of blocks that array A can be divided into is three.</p>
+<p>Write a function:</p>
+<blockquote><p style="font-family: monospace; font-size: 9pt; display: block; white-space: pre-wrap"><tt>int solution(vector&lt;int&gt; &amp;A);</tt></p></blockquote>
+<p>that, given a non-empty array A consisting of N integers, returns the maximum number of blocks into which A can be divided.</p>
+<p>If A cannot be divided into some number of blocks, the function should return 0.</p>
+<p>For example, given:</p>
+<tt style="white-space:pre-wrap">    A[0] = 1
+    A[1] = 2
+    A[2] = 3
+    A[3] = 4
+    A[4] = 3
+    A[5] = 4
+    A[6] = 1
+    A[7] = 2
+    A[8] = 3
+    A[9] = 4
+    A[10] = 6
+    A[11] = 2</tt>
+<p>the function should return 3, as explained above.</p>
+<p>Write an <b><b>efficient</b></b> algorithm for the following assumptions:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>N is an integer within the range [<span class="number">1</span>..<span class="number">100,000</span>];</li>
+<li>each element of array A is an integer within the range [<span class="number">0</span>..<span class="number">1,000,000,000</span>].</li>
+</ul>
+</blockquote></div>
 <div>
 <p>分析：</p>
-
+将数组A平均分成K个子序列，使每个子序列至少含有一个原数组的极大值。求最大的K。
 </div>
 <pre><span class="comment">// Peaks
 </span><span class="comment">// Divide an array into the maximum number of same - sized blocks, each of which should contain an index P such that A[P - 1] &lt; A[P] &gt; A[P + 1].

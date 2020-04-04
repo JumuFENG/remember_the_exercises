@@ -6,10 +6,41 @@
 	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
 <body>
 <p><a href="javascript:toggle_description()">问题描述:</a></p>
-
+<div id="brinza-task-description">
+<p>An array A consisting of N integers is given. It contains daily prices of a stock share for a period of N consecutive days. If a single share was bought on day P and sold on day Q, where 0 ≤ P ≤ Q &lt; N, then the <i>profit</i> of such transaction is equal to A[Q] − A[P], provided that A[Q] ≥ A[P]. Otherwise, the transaction brings <i>loss</i> of A[P] − A[Q].</p>
+<p>For example, consider the following array A consisting of six elements such that:</p>
+<tt style="white-space:pre-wrap">  A[0] = 23171
+  A[1] = 21011
+  A[2] = 21123
+  A[3] = 21366
+  A[4] = 21013
+  A[5] = 21367</tt>
+<p>If a share was bought on day 0 and sold on day 2, a loss of 2048 would occur because A[2] − A[0] = 21123 − 23171 = −2048. If a share was bought on day 4 and sold on day 5, a profit of 354 would occur because A[5] − A[4] = 21367 − 21013 = 354. Maximum possible profit was 356. It would occur if a share was bought on day 1 and sold on day 5.</p>
+<p>Write a function,</p>
+<blockquote><p style="font-family: monospace; font-size: 9pt; display: block; white-space: pre-wrap"><tt>int solution(vector&lt;int&gt; &amp;A);</tt></p></blockquote>
+<p>that, given an array A consisting of N integers containing daily prices of a stock share for a period of N consecutive days, returns the maximum possible profit from one transaction during this period. The function should return 0 if it was impossible to gain any profit.</p>
+<p>For example, given array A consisting of six elements such that:</p>
+<tt style="white-space:pre-wrap">  A[0] = 23171
+  A[1] = 21011
+  A[2] = 21123
+  A[3] = 21366
+  A[4] = 21013
+  A[5] = 21367</tt>
+<p>the function should return 356, as explained above.</p>
+<p>Write an <b><b>efficient</b></b> algorithm for the following assumptions:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>N is an integer within the range [<span class="number">0</span>..<span class="number">400,000</span>];</li>
+<li>each element of array A is an integer within the range [<span class="number">0</span>..<span class="number">200,000</span>].</li>
+</ul>
+</blockquote></div>
 <div>
 <p>分析：</p>
-
+计算可能的最大收益,
+<li>全局最小值在最大值之前，最大收益是全局最大值减全局最小值.
+<li>否则整个序列被分成三个区间，[0, I(max)], [I(max), I(min)], [I(min), N]
+<li>[0, I(max)] 由于最大值在区间的最后，只需要找到最小值即可得到该区间的最大收益
+<li>[I(min), N] 由于最小值在区间的开始，只需要找到最大值即可得到该区间的最大收益
+<li>[I(max), I(min)] 需要找到I(max)之后第一个极小值Id(min)和I(min)之前第一个极大值Id(max)，递归计算[Id(min), Id(max)]的最大值</li>
+<li>[I(max), Id(min)] 和 [Id(max), I(min)]是两个单调减区间，不会出现正收益</li>
 </div>
 <pre><span class="comment">// MaxProfit
 </span><span class="comment">// Given a log of stock prices compute the maximum possible earning.

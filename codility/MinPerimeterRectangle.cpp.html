@@ -6,10 +6,27 @@
 	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
 <body>
 <p><a href="javascript:toggle_description()">问题描述:</a></p>
-
+<div id="brinza-task-description">
+<p>An integer N is given, representing the area of some rectangle.</p>
+<p>The <i>area</i> of a rectangle whose sides are of length A and B is A * B, and the <i>perimeter</i> is 2 * (A + B).</p>
+<p>The goal is to find the minimal perimeter of any rectangle whose area equals N. The sides of this rectangle should be only integers.</p>
+<p>For example, given integer N = 30, rectangles of area 30 are:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>(1, 30), with a perimeter of 62,</li>
+<li>(2, 15), with a perimeter of 34,</li>
+<li>(3, 10), with a perimeter of 26,</li>
+<li>(5, 6), with a perimeter of 22.</li>
+</ul>
+</blockquote><p>Write a function:</p>
+<blockquote><p style="font-family: monospace; font-size: 9pt; display: block; white-space: pre-wrap"><tt>int solution(int N);</tt></p></blockquote>
+<p>that, given an integer N, returns the minimal perimeter of any rectangle whose area is exactly equal to N.</p>
+<p>For example, given an integer N = 30, the function should return 22, as explained above.</p>
+<p>Write an <b><b>efficient</b></b> algorithm for the following assumptions:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>N is an integer within the range [<span class="number">1</span>..<span class="number">1,000,000,000</span>].</li>
+</ul>
+</blockquote></div>
 <div>
 <p>分析：</p>
-
+计算面积为N的矩形的最小周长,边长只能为整数.
 </div>
 <pre><span class="comment">// MinPerimeterRectangle
 </span><span class="comment">// Find the minimal perimeter of any rectangle whose area equals N.
@@ -23,22 +40,7 @@
         <span class="keyword">return</span> <span class="numeric">0</span>;
     }
 
-    <span class="keyword">if</span> (N == <span class="numeric">1</span>)
-    {
-        <span class="keyword">return</span> <span class="numeric">4</span>;
-    }
-
-    <span class="keyword">if</span> (N &lt; <span class="numeric">4</span>)
-    {
-        <span class="keyword">return</span> <span class="numeric">2</span> * (<span class="numeric">1</span> + N);
-    }
-
     <span class="keyword">int</span> s = (<span class="keyword">int</span>)sqrt(N);
-    <span class="keyword">if</span> (s * s == N)
-    {
-        <span class="keyword">return</span> <span class="numeric">4</span> * s;
-    }
-
     <span class="keyword">for</span> (<span class="keyword">int</span> i = s; i &gt; <span class="numeric">0</span>; --i)
     {
         <span class="keyword">if</span> (N % i == <span class="numeric">0</span>)
