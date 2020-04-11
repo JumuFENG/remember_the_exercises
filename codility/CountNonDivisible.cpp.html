@@ -1,0 +1,109 @@
+<html>
+<head>
+	<title>CountNonDivisible.cpp</title>
+	<meta charset="utf-8">
+	<link href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+<div id="brinza-task-description">
+<p>You are given an array A consisting of N integers.</p>
+<p>For each number A[i] such that 0 ≤ i &lt; N, we want to count the number of elements of the array that are not the divisors of A[i]. We say that these elements are non-divisors.</p>
+<p>For example, consider integer N = 5 and array A such that:</p>
+<tt style="white-space:pre-wrap">    A[0] = 3
+    A[1] = 1
+    A[2] = 2
+    A[3] = 3
+    A[4] = 6</tt>
+<p>For the following elements:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>A[0] = 3, the non-divisors are: 2, 6,</li>
+<li>A[1] = 1, the non-divisors are: 3, 2, 3, 6,</li>
+<li>A[2] = 2, the non-divisors are: 3, 3, 6,</li>
+<li>A[3] = 3, the non-divisors are: 2, 6,</li>
+<li>A[4] = 6, there aren't any non-divisors.</li>
+</ul>
+</blockquote><p>Write a function:</p>
+<blockquote><p style="font-family: monospace; font-size: 9pt; display: block; white-space: pre-wrap"><tt>vector&lt;int&gt; solution(vector&lt;int&gt; &amp;A);</tt></p></blockquote>
+<p>that, given an array A consisting of N integers, returns a sequence of integers representing the amount of non-divisors.</p>
+<p>Result array should be returned as a vector of integers.</p>
+<p>For example, given:</p>
+<tt style="white-space:pre-wrap">    A[0] = 3
+    A[1] = 1
+    A[2] = 2
+    A[3] = 3
+    A[4] = 6</tt>
+<p>the function should return [2, 4, 3, 2, 0], as explained above.</p>
+<p>Write an <b><b>efficient</b></b> algorithm for the following assumptions:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>N is an integer within the range [<span class="number">1</span>..<span class="number">50,000</span>];</li>
+<li>each element of array A is an integer within the range [<span class="number">1</span>..<span class="number">2 * N</span>].</li>
+</ul>
+</blockquote></div>
+<div>
+<p>分析：</p>
+对于A中每个数A[i]，需要计算A中不是A[i]的因数的个数。为了降低复杂度
+<li>先做hash得到A中所有数的出现次数。
+<li>然后对A[i]计算A中出现的因数个数总个数</li>
+<li>结果就是A的总长度减去上一步的结果</li>
+<li>由于A中有重复数字，另加一个hash数组hashCount存储结果</li>
+</div>
+<pre><span class="comment">// CountNonDivisible
+</span><span class="comment">// Calculate the number of elements of an array that are not divisors of each element.
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="macro">#include &lt;cmath&gt;
+</span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+vector&lt;<span class="keyword">int</span>&gt; GetFactors(<span class="keyword">int</span> N)
+{
+    vector&lt;<span class="keyword">int</span>&gt; factors;
+    <span class="keyword">int</span> s = sqrt(N) + <span class="numeric">1</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="numeric">1</span>; i &lt; s; ++i)
+    {
+        <span class="keyword">if</span> (N % i == <span class="numeric">0</span>)
+        {
+            factors.push_back(i);
+            <span class="keyword">if</span> (N/i != i)
+            {
+                factors.push_back(N / i);
+            }
+        }
+    }
+    <span class="keyword">return</span> factors;
+}
+
+vector&lt;<span class="keyword">int</span>&gt; CountNonDivisible(vector&lt;<span class="keyword">int</span>&gt; A)
+{
+    vector&lt;<span class="keyword">int</span>&gt; countNonDiv;
+    vector&lt;<span class="keyword">int</span>&gt; hashA;
+    <span class="keyword">for</span> (size_t i = <span class="numeric">0</span>; i &lt; A.size(); ++i)
+    {
+        <span class="keyword">if</span> ((<span class="keyword">int</span>)hashA.size() &lt;= A[i])
+        {
+            hashA.resize(A[i] + <span class="numeric">1</span>, <span class="numeric">0</span>);
+        }
+        hashA[A[i]] += <span class="numeric">1</span>;
+    }
+    vector&lt;<span class="keyword">int</span>&gt; hashCount(hashA.size(), <span class="numeric">0</span>);
+
+    <span class="keyword">for</span> (size_t i = <span class="numeric">0</span>; i &lt; A.size(); ++i)
+    {
+        <span class="keyword">if</span> (hashCount[A[i]] != <span class="numeric">0</span>)
+        {
+            countNonDiv.push_back(hashCount[A[i]]);
+            <span class="keyword">continue</span>;
+        }
+
+        <span class="keyword">int</span> factorCount = <span class="numeric">0</span>;
+        vector&lt;<span class="keyword">int</span>&gt; factors = GetFactors(A[i]);
+        <span class="keyword">for</span> (size_t j = <span class="numeric">0</span>; j &lt; factors.size(); ++j)
+        {
+            factorCount += hashA[factors[j]];
+        }
+        countNonDiv.push_back(A.size() - factorCount);
+        hashCount[A[i]] = A.size() - factorCount;
+    }
+
+    <span class="keyword">return</span> countNonDiv;
+}}</pre>
+</body>
+</html>

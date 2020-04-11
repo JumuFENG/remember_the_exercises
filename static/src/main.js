@@ -67,7 +67,9 @@ var caseNames = [
     'CountFactors',
     'MinPerimeterRectangle',
     'Peaks',
-    'Flags'
+    'Flags',
+    'CountNonDivisible',
+    'CountSemiprimes'
 ];
 
 class CaseCollection {

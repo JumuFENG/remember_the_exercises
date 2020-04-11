@@ -64,6 +64,7 @@
 <pre><span class="comment">// Flags
 </span><span class="comment">// Find the maximum number of flags that can be set on mountain peaks.
 </span><span class="macro">#include &lt;vector&gt;
+</span><span class="macro">#include &lt;cmath&gt;
 </span><span class="keyword">using</span> <span class="keyword">namespace</span> std;
 
 <span class="keyword">int</span> Flags(vector&lt;<span class="keyword">int</span>&gt; &amp;A)
@@ -102,7 +103,7 @@
         }
         <span class="keyword">if</span> (fCount &gt;= i)
         {
-            <span class="keyword">return</span> fCount;
+            <span class="keyword">return</span> i;
         }
     }
     <span class="keyword">return</span> <span class="numeric">0</span>;

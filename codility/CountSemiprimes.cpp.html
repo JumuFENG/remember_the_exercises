@@ -1,0 +1,123 @@
+<html>
+<head>
+	<title>CountSemiprimes.cpp</title>
+	<meta charset="utf-8">
+	<link href="../static/src/cpp.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src = '../static/src/cpp.js'></script></head>
+<body>
+<p><a href="javascript:toggle_description()">问题描述:</a></p>
+<div id="brinza-task-description">
+<p>A <i>prime</i> is a positive integer X that has exactly two distinct divisors: 1 and X. The first few prime integers are 2, 3, 5, 7, 11 and 13.</p>
+<p>A <i>semiprime</i> is a natural number that is the product of two (not necessarily distinct) prime numbers. The first few semiprimes are 4, 6, 9, 10, 14, 15, 21, 22, 25, 26.</p>
+<p>You are given two non-empty arrays P and Q, each consisting of M integers. These arrays represent queries about the number of semiprimes within specified ranges.</p>
+<p>Query K requires you to find the number of semiprimes within the range (P[K], Q[K]), where 1 ≤ P[K] ≤ Q[K] ≤ N.</p>
+<p>For example, consider an integer N = 26 and arrays P, Q such that:</p>
+<tt style="white-space:pre-wrap">    P[0] = 1    Q[0] = 26
+    P[1] = 4    Q[1] = 10
+    P[2] = 16   Q[2] = 20</tt>
+<p>The number of semiprimes within each of these ranges is as follows:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>(1, 26) is 10,</li>
+<li>(4, 10) is 4,</li>
+<li>(16, 20) is 0.</li>
+</ul>
+</blockquote><p>Write a function:</p>
+<blockquote><p style="font-family: monospace; font-size: 9pt; display: block; white-space: pre-wrap"><tt>vector&lt;int&gt; solution(int N, vector&lt;int&gt; &amp;P, vector&lt;int&gt; &amp;Q);</tt></p></blockquote>
+<p>that, given an integer N and two non-empty arrays P and Q consisting of M integers, returns an array consisting of M elements specifying the consecutive answers to all the queries.</p>
+<p>For example, given an integer N = 26 and arrays P, Q such that:</p>
+<tt style="white-space:pre-wrap">    P[0] = 1    Q[0] = 26
+    P[1] = 4    Q[1] = 10
+    P[2] = 16   Q[2] = 20</tt>
+<p>the function should return the values [10, 4, 0], as explained above.</p>
+<p>Write an <b><b>efficient</b></b> algorithm for the following assumptions:</p>
+<blockquote><ul style="margin: 10px;padding: 0px;"><li>N is an integer within the range [<span class="number">1</span>..<span class="number">50,000</span>];</li>
+<li>M is an integer within the range [<span class="number">1</span>..<span class="number">30,000</span>];</li>
+<li>each element of arrays P, Q is an integer within the range [<span class="number">1</span>..<span class="number">N</span>];</li>
+<li>P[i] ≤ Q[i].</li>
+</ul>
+</blockquote></div>
+<div>
+<p>分析：</p>
+semiPrime表示可以分解成两个素数相乘的数，先找到Q中最大的数Qmax，然后计算小于等于i的semiPrime个数存到leftSemiCount中，最后计算leftSemiCount[Q[i]] - leftSemiCount[P[i] - 1]即为所求。
+</div>
+<pre><span class="comment">// CountSemiprimes
+</span><span class="comment">// Count the semiprime numbers in the given range[a..b]
+</span><span class="macro">#include &lt;vector&gt;
+</span><span class="macro">#include &lt;cmath&gt;
+</span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> std;
+
+<span class="keyword">bool</span> IsPrime(<span class="keyword">int</span> N)
+{
+    <span class="keyword">if</span> (N &lt; <span class="numeric">2</span>)
+    {
+        <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+    <span class="keyword">int</span> s = sqrt(N) + <span class="numeric">1</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="numeric">2</span>; i &lt; s; ++i)
+    {
+        <span class="keyword">if</span> (N%i == <span class="numeric">0</span>)
+        {
+            <span class="keyword">return</span> <span class="keyword">false</span>;
+        }
+    }
+    <span class="keyword">return</span> <span class="keyword">true</span>;
+}
+
+<span class="keyword">bool</span> IsSemiPrime(<span class="keyword">const</span> vector&lt;<span class="keyword">bool</span>&gt; &amp;primeHash, <span class="keyword">int</span> N)
+{
+    <span class="keyword">if</span> (N &lt; <span class="numeric">4</span>)
+    {
+        <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+    <span class="keyword">int</span> s = sqrt(N) + <span class="numeric">1</span>;
+    vector&lt;<span class="keyword">int</span>&gt; factors;
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="numeric">2</span>; i &lt; s; ++i)
+    {
+        <span class="keyword">if</span> (N % i == <span class="numeric">0</span>)
+        {
+            factors.push_back(i);
+            factors.push_back(N / i);
+        }
+    }
+    <span class="keyword">if</span> (factors.size() != <span class="numeric">2</span>)
+    {
+        <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+    <span class="keyword">return</span> primeHash[factors[<span class="numeric">0</span>]] &amp;&amp; primeHash[factors[<span class="numeric">1</span>]];
+}
+
+vector&lt;<span class="keyword">int</span>&gt; CountSemiprimes(<span class="keyword">int</span> N, vector&lt;<span class="keyword">int</span>&gt; &amp;P, vector&lt;<span class="keyword">int</span>&gt; &amp;Q)
+{
+    vector&lt;<span class="keyword">bool</span>&gt; semiPrimeHash;
+    <span class="keyword">for</span> (size_t i = <span class="numeric">0</span>; i &lt; Q.size(); i++)
+    {
+        <span class="keyword">if</span> (<span class="keyword">int</span>(semiPrimeHash.size()) &lt;= Q[i])
+        {
+            semiPrimeHash.resize(Q[i] + <span class="numeric">1</span>, <span class="keyword">false</span>);
+        }
+    }
+
+    vector&lt;<span class="keyword">bool</span>&gt; primeHash(semiPrimeHash.size(), <span class="keyword">false</span>);
+    <span class="keyword">for</span> (size_t i = <span class="numeric">2</span>; i &lt; primeHash.size(); ++i)
+    {
+        primeHash[i] = IsPrime(i);
+    }
+    vector&lt;<span class="keyword">int</span>&gt; leftSemiCount(semiPrimeHash.size(), <span class="numeric">0</span>);
+    <span class="keyword">for</span> (size_t i = <span class="numeric">4</span>; i &lt; semiPrimeHash.size(); ++i)
+    {
+        semiPrimeHash[i] = IsSemiPrime(primeHash, i);
+        leftSemiCount[i] = leftSemiCount[i - <span class="numeric">1</span>] + <span class="keyword">int</span>(semiPrimeHash[i]);
+    }
+
+    vector&lt;<span class="keyword">int</span>&gt; countSemiPrime;
+    <span class="keyword">for</span> (size_t i = <span class="numeric">0</span>; i &lt; P.size(); ++i)
+    {
+        <span class="keyword">int</span> countI = leftSemiCount[Q[i]] - leftSemiCount[P[i] - <span class="numeric">1</span>];
+        countSemiPrime.push_back(countI);
+    }
+    <span class="keyword">return</span> countSemiPrime;
+}
+
+</pre>
+</body>
+</html>
